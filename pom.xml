@@ -9,9 +9,11 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <!--<modules>
+    <modules>
         <module>eureka-server</module>
-    </modules>-->
+        <module>api-gateway-service</module>
+        <module>user-service</module>
+    </modules>
 
     <properties>
         <java.version>23</java.version>
