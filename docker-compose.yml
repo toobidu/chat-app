@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+#  EUREKA SERVER
+  eureka-server:
+    image: eureka-server:latest
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - chat-network
+
+#  API GATEWAY SERVICE
+  api-gateway:
+    image: api-gateway:latest
+    build: ./api-gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    networks:
+      - chat-network
+
+#  USER SERVICE
+  postgres:
+    image: postgres:15
+    container_name: user-service-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: user_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chat-network
+
+  redis:
+    image: redis:latest
+    container_name: redis_user
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass demo
+    volumes:
+      - redis_data:/data
+    networks:
+      - chat-network
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address :9001
+    volumes:
+      - minio_data:/data
+    networks:
+      - chat-network
+
+  user-service:
+    image: user-service:latest
+    build: ./user-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/user_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: user
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_REDIS_PASSWORD: user
+      SPRING_EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      - postgres
+      - redis
+      - eureka-server
+    networks:
+      - chat-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+
+networks:
+  chat-network:
