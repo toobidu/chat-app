@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class BlockedUserRequest {
-    private UUID blockerId;
+@NoArgsConstructor
+public class UnblockUserRequest {
     private UUID blockedId;
-    private String reason;
 }

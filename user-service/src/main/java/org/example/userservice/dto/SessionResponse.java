@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class ContactResponse {
-    private UUID ownerId;
-    private UUID contactId;
-    private String nickname;
-    private String phone;
-    private String email;
-    private UserResponse contactInfo;
+public class SessionResponse {
+    private String accessToken;
+    private String refreshToken;
+    private UUID userId;
+    private String deviceInfo;
+    private LocalDateTime expiresAt;
+    private Boolean revoked;
     private LocalDateTime createdAt;
 }

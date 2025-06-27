@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlockedUserRequest {
-    private UUID blockerId;
-    private UUID blockedId;
-    private String reason;
+public class RoleResponse {
+    private Long id;
+    private String roleName;
+    private String description;
 }

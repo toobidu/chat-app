@@ -9,8 +9,10 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlockedUserRequest {
-    private UUID blockerId;
-    private UUID blockedId;
-    private String reason;
+public class TwoFactorAuthRequest {
+    private UUID userId;
+    private String methodProvider;
+    private String secret;
+    private String backupCode;
+    private Boolean enabled;
 }

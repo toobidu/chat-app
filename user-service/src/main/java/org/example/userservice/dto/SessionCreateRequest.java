@@ -5,12 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRespone {
-    private String accessToken;
+public class SessionCreateRequest {
+    private String token;
     private String refreshToken;
+    private UUID userId;
+    private String deviceInfo;
     private LocalDateTime expiresAt;
+    private Boolean revoked;
 }
