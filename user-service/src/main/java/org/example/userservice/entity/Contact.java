@@ -25,6 +25,12 @@ public class Contact {
     @Column(name = "nickname")
     private String nickname;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
